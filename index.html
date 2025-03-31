@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitación de 15</title>
+
+<style>
+    #playMusic {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 60px;
+        height: 60px;
+        background-color: #f1b0b0;
+        color: white;
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        z-index: 1000;
+        transition: transform 0.3s ease-in-out, background-color 0.3s ease, width 0.3s, height 0.3s;
+    }
+    
+    #playMusic:hover {
+        transform: scale(1.1);
+        background-color: #f17e7b;
+    }
+    
+    /* Estilo del icono dentro del botón */
+    #playMusic::before {
+        content: "🎵";
+        font-size: 32px;
+    }
+    
+    /* Media Queries para pantallas más pequeñas */
+    @media (max-width: 768px) {
+        #playMusic {
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            bottom: 15px;
+            right: 15px;
+        }
+    
+        #playMusic::before {
+            font-size: 28px;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        #playMusic {
+            width: 40px;
+            height: 40px;
+            font-size: 18px;
+            bottom: 10px;
+            right: 10px;
+        }
+    
+        #playMusic::before {
+            font-size: 24px;
+        }
+    }
+
+
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; 
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffe4e1;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    color: #333;
+    overflow-x: hidden; /* Asegura que no haya desbordes horizontales */
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 0;
+    margin: 0 auto; /* Centramos las secciones */
+    max-width: 600px; /* Limitamos el ancho máximo */
+    width: 100%; /* Aseguramos que ocupe el 100% del contenedor */
+}
+
+img {
+    width: 100%;
+    max-width: 100%; /* Asegura que la imagen no se salga del contenedor */
+    margin: 0;
+    display: block; /* Asegura que las imágenes se alineen correctamente */
+}
+
+.countdown-container, .form-container {
+        background: #ffe4e1;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 100%; /* Asegura que ocupe todo el ancho disponible */
+        max-width: 600px; /* Limita el ancho máximo a 600px, igual que las imágenes */
+        margin: 0 auto; /* Centramos el formulario */
+    
+}
+
+#countdown {
+    font-size: 28px;
+    font-weight: bold;
+    margin-top: 10px;
+    color: #faa6a3; /* Color rosa para el contador */
+}
+
+.button {
+    padding: 15px 30px;
+    background: #f17e7b;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 18px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.button:hover {
+    background: #f7908d;
+    transform: translateX(-50%) scale(1.1);
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    width: 300px;
+}
+
+.modal img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.modal-close {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: #f17e7b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal-close:hover {
+    background: #f7908d;
+}
+
+.close-button {
+    background: #f17e7b; /* Rosa vibrante */
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.close-button:hover {
+    background: #f7908d; /* Rosa más suave al pasar el mouse */
+}
+
+.form-input {
+    width: calc(100% - 40px);
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.confirm-button {
+    background: #f17e7b;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease; /* Efecto de hover */
+}
+
+.confirm-button:hover {
+    background: #f7908d; /* Cambio de color al pasar el ratón */
+}
+
+h2 {
+    color: #f4acaa; /* Color rosa para los títulos */
+}
+
+/* Estilos responsivos */
+@media (max-width: 600px) {
+    .section {
+        padding: 0 10px; /* Añadimos un pequeño padding en móviles */
+    }
+    #countdown {
+        font-size: 24px; /* Reducimos el tamaño del contador en móviles */
+    }
+    .button {
+        width: auto; /* Ajustamos el ancho del botón en móviles */
+        font-size: 14px; /* Reducimos el tamaño de la fuente en móviles */
+    }
+    .form-input, .confirm-button {
+        width: 100%; /* Inputs y botones ocuparán todo el ancho en móviles */
+    }
+}
+
+/* Aseguramos que los elementos no se desborden */
+html, body {
+    overflow-x: hidden; /* Elimina el desbordamiento horizontal */
+}
+
+/* Estilos solo para las tres imágenes dentro de .imagenes-separadas */
+.imagenes-separadas {
+    display: flex;
+    flex-wrap: wrap; /* Permitimos que las imágenes se ajusten si es necesario */
+    justify-content: center; /* Aseguramos que las imágenes estén centradas */
+    align-items: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.imagenes-separadas img {
+    width: 100%; /* Las imágenes ocuparán el 100% del contenedor */
+    max-width: 100%; /* El ancho máximo será el del contenedor */
+    box-sizing: border-box; /* Aseguramos que el borde se integre en el cálculo del ancho */
+    padding: 25px; /* Añadimos un relleno (equivalente al borde) */
+    border: 25px solid white; /* Borde blanco alrededor de las imágenes */
+    border-radius: 10px; /* Bordes redondeados */
+    margin: 0;
+}
+</style>
+</head>
+<body>
+    
+    <button id="playMusic" class="confirm-button"></button>
+    <audio id="audio" loop>
+        <source src="DieWithASmile.mp3" type="audio/mpeg">
+    </audio>
+    <div class="section">
+        <img src="mia.jpg" alt="Uma">
+    </div>
+
+    <div class="section imagenes-separadas">
+        <img class="imagen-uno" src="Uno.jpg" alt="Uma">
+    </div>
+    
+    <div class="section imagenes-separadas">
+        <img class="imagen-dos" src="Dos.jpg" alt="Uma">
+    </div>
+    
+    <div class="section imagenes-separadas">
+        <img class="imagen-tres" src="Tres.jpg" alt="Uma">
+    </div>
+    
+
+
+
+
+
+    <div class="section">
+        <img src="fecha.jpg" alt="Fecha">
+    </div>
+    <div class="section">
+        <div class="countdown-container">
+            <h2>FALTAN</h2>
+            <div id="countdown"></div>
+        </div>
+    </div>
+    <div class="section">
+        <img src="te invito.jpg" alt="Lugar">
+        <button class="button" onclick="window.open('https://www.google.com/maps/place/Marconi+930,+Mar+del+Plata', '_blank')">Ver en Google Maps</button>
+    </div>
+    <div class="section">
+        <img src="Dress.jpg" alt="Fecha">
+    </div>
+
+    <div class="section">
+        <img src="Musica.jpg" alt="Lugar">
+        <button class="button" onclick="window.open('https://open.spotify.com/playlist/6FqpuaOvf7DT8WomVEmZej?si=0AV2OWiYSmal2CoGr9lCsQ&pi=ve28dza1QJ6hD', '_blank')">Ver playlist de Spotify</button>
+    </div>
+
+    <div class="section">
+        <img src="regalo.jpg" alt="Regalo">
+        <button class="button" onclick="showModal()">Ver cuenta bancaria</button>
+    </div>
+    <div class="modal" id="bankModal">
+        <img src="DATOS_DE_TRANFERENCIA.jpg" alt="Datos Bancarios">
+        <button class="modal-close" onclick="closeModal()">Cerrar</button>
+    </div>
+
+    <div class="section">
+        <div class="form-container">
+            <h2>Confirma tu asistencia</h2>
+            <form onsubmit="sendWhatsApp(event)">
+                <input type="text" class="form-input" id="name" placeholder="Nombre" required>
+                <input type="number" class="form-input" id="cantidad" placeholder="Cantidad de acompañantes (sin contarte a vos)" min="0" required>
+                <button type="submit" class="confirm-button">Enviar</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("playMusic").addEventListener("click", function () {
+            document.getElementById("audio").play();
+            this.style.display = "none"; // Oculta el botón después de hacer clic
+        });
+        function updateCountdown() {
+            const eventDate = new Date("2025-05-24T21:00:00");
+            const now = new Date();
+            const diff = eventDate - now;
+            
+            if (diff > 0) {
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                document.getElementById("countdown").innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            } else {
+                document.getElementById("countdown").innerText = "¡Es hoy!";
+            }
+        }
+
+        function sendWhatsApp(event) {
+            event.preventDefault();
+            const name = document.getElementById("name").value;
+            const cantidad = parseInt(document.getElementById("cantidad").value) || 0;
+            const total = cantidad + 1; 
+            const phone = "+5492235112839"; 
+            const url = `https://wa.me/${phone}?text=${encodeURIComponent(
+                `Hola, soy ${name} y confirmo mi asistencia a tu fiesta. Iré con ${cantidad} persona(s) más, en total seremos ${total}.`
+            )}`;
+            window.open(url, "_blank");
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        function showModal() {
+            document.getElementById("bankModal").style.display = "block";
+        }
+        function closeModal() {
+            document.getElementById("bankModal").style.display = "none";
+        }
+    </script>
+</body>
+</html>
